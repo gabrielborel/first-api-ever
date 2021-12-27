@@ -1,10 +1,11 @@
-const express = require('express')
-const app = express()
+const customExpress = require('./config/customExpress')
+const connection = require('./infraestructure/conexao')
+const Tables = require('./infraestructure/tabelas')
 
-app.listen(3000, console.log('server is running on port 3000'))
+connection.connect((err) => {
+  if (err) console.log(err)
 
-app.get('/', (req, res) => res.send('vc está na página principal'))
-
-app.get('/carros', (req, res) => res.send('vc está na pagina de carros'))
-
-app.get('/carros/sedan' ,(req, res) => res.send('vc está na página de carros -> sedan'))
+  Tables.init(connection)
+  const app = customExpress()
+  app.listen(3000, () => console.log('server is running on port 3000'))
+})
