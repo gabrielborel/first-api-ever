@@ -1,6 +1,5 @@
-# first-api-ever
+## first-api-ever
 
-!! MY FIRST REST API EVER !!
+### MY FIRST REST API EVER !!
 
-An API REST made with Express, using mySql to save data, and postman to test the routes.
-Very interesting nodeJS
+Uma API REST feita com Express, mySQL para persistencia de dados e postman para o teste de rotas.

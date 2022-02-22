@@ -7,6 +7,9 @@ connection.connect((err) => {
   if (err) console.log(err)
 
   Tables.init(connection)
+
   const app = customExpress()
-  app.listen(3000, () => console.log(chalk.bold.green('server is running on port 3000')))
+  app.listen(3000, () =>
+    console.log(chalk.bold.green('server is running on port 3000'))
+  )
 })

@@ -1,11 +1,12 @@
 const moment = require('moment')
-
 const connection = require('../infraestructure/conexao')
 
 class Atendimento {
   adiciona(atendimento, res) {
     const dataCriacao = moment().format('YYYY-MM-DD HH:MM:SS')
-    const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
+    const data = moment(atendimento.data, 'DD/MM/YYYY').format(
+      'YYYY-MM-DD HH:MM:SS'
+    )
 
     const dataEhValida = moment(data).isSameOrAfter(dataCriacao)
     const clienteEhValido = atendimento.cliente.length >= 7
@@ -14,22 +15,22 @@ class Atendimento {
       {
         nome: 'data',
         valido: dataEhValida,
-        mensagem: 'Data deve ser maior ou igual a data atual'
+        mensagem: 'Data deve ser maior ou igual a data atual',
       },
       {
         nome: 'cliente',
         valido: clienteEhValido,
-        mensagem: 'O nome do cliente deve ter pelomenos cinco caracteres'
-      }
+        mensagem: 'O nome do cliente deve ter pelomenos cinco caracteres',
+      },
     ]
 
-    const erros = validacoes.filter(campo => !campo.valido)
+    const erros = validacoes.filter((campo) => !campo.valido)
     const existemErros = erros.length
 
     if (existemErros) {
       res.status(400).json(erros)
     } else {
-      const atendimentoDatado = {...atendimento, dataCriacao, data}
+      const atendimentoDatado = { ...atendimento, dataCriacao, data }
 
       const sql = 'INSERT INTO Atendimentos SET ?'
 
@@ -62,13 +63,16 @@ class Atendimento {
   }
 
   altera(id, valores, res) {
-    if (valores.data) valores.data = moment(valores.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
+    if (valores.data)
+      valores.data = moment(valores.data, 'DD/MM/YYYY').format(
+        'YYYY-MM-DD HH:MM:SS'
+      )
     const sql = 'UPDATE Atendimentos SET ? WHERE id=?'
 
     connection.query(sql, [valores, id], (err, results) => {
       if (err) res.status(400).json(err)
 
-      res.status(200).json({...valores, id})
+      res.status(200).json({ ...valores, id })
     })
   }
 
@@ -78,9 +82,9 @@ class Atendimento {
     connection.query(sql, id, (err, results) => {
       if (err) res.status(400).json(res)
 
-      res.status(200).json({id})
+      res.status(200).json({ id })
     })
   }
 }
 
-module.exports = new Atendimento
+module.exports = new Atendimento()

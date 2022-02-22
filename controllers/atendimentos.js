@@ -1,6 +1,6 @@
 const Atendimento = require('../models/atendimento')
 
-module.exports = app => {
+module.exports = (app) => {
   app.get('/atendimentos', (_, res) => {
     Atendimento.lista(res)
   })
